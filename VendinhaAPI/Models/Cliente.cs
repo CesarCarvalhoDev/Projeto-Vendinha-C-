@@ -2,9 +2,9 @@ using VendinhaAPI.DTOs;
 
 namespace VendinhaAPI.Models;
 
-class Cliente
+public class Cliente
 {
-    public int Id { get; private set; }
+    public int Id { get; set; }
     public string NomeCompleto { get; set; }
     public string CPF { get; set; }
     public DateTime DataNascimento { get; set; }
