@@ -1,8 +1,8 @@
+using VendinhaAPI.DTOs;
+using VendinhaAPI.Models;
+
 namespace VendinhaAPI.Services
 {
-    using VendinhaAPI.DTOs;
-    using VendinhaAPI.Models;
-
     public class ContaService
     {
         private static List<Divida> _bancoDeDados = new List<Divida>();
@@ -47,7 +47,39 @@ namespace VendinhaAPI.Services
             return _bancoDeDados.ToList();
         }
 
-        public decimal CalcularSaldo()
+        public List<Divida> ListarContasAbertas()
+        {
+            return _bancoDeDados.Where(divida => divida.Situacao == "Pendente").ToList();
+        }
+
+        public List<ClienteComDividaDto> ListarClienteComDivida()
+        {
+            List<ClienteComDividaDto> relatorio = new List<ClienteComDividaDto>();
+
+            foreach(var divida in _bancoDeDados)
+            {
+                if(divida.Situacao == "Pendente")
+                {
+                    Cliente cliente = _clienteService.BuscarPorId(divida.ClienteId);
+
+                    ClienteComDividaDto dto = new ClienteComDividaDto
+                    {
+                        ClienteId = cliente.Id,
+                        NomeCompleto = cliente.NomeCompleto,
+                        Email = cliente.Email,
+                        CPF = cliente.CPF,
+                        ValorDivida = divida.Valor,
+                        SituacaoDivida = divida.Situacao
+                    };
+
+                    relatorio.Add(dto);
+                }
+            }
+
+            return relatorio;
+        }
+
+        public decimal CalcularSaldoDividas()
         {
             decimal total = 0;
 
@@ -62,24 +94,29 @@ namespace VendinhaAPI.Services
             return total;
         }
 
-        public void FecharConta(PagamentoDto dto)
+        public decimal CalcularSaldoTotalPago()
         {
-            var dividaAberta = _bancoDeDados.FirstOrDefault(divida =>
-                divida.Id == dto.DividaId
-            );
+            decimal totalPago = 0;
 
-            if (dividaAberta is null)
+            List<Divida> pagamentos = _bancoDeDados.Where(pagamentos => pagamentos.Situacao == "Pago").ToList();
+
+            foreach(var pagamento in pagamentos)
             {
-                throw new Exception("Dívida não encontrada");
+                totalPago = totalPago + pagamento.Valor;
             }
 
-            if (dividaAberta.Situacao == "Paga")
-            {
-                throw new Exception("A dívida já foi paga");
-            }
+            return totalPago;
+        }
 
-            dividaAberta.Situacao = "Paga";
-            dividaAberta.DataPagamento = DateTime.Now;
+        public Divida? BuscarDivida(int id)
+        {
+            Divida? divida = _bancoDeDados.FirstOrDefault(divida => divida.Id == id);
+            return divida;
+        }
+
+        public List<Divida> BuscarDividasPorCliente(int clienteId)
+        {
+            return _bancoDeDados.Where(divida => divida.ClienteId == clienteId).ToList();
         }
     }
 }

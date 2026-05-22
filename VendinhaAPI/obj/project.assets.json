@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "targets": {
     "net10.0": {
       "Humanizer.Core/2.14.1": {
@@ -1975,19 +1975,19 @@
     ]
   },
   "packageFolders": {
-    "/home/codespace/.nuget/packages/": {}
+    "C:\\Users\\cesar.rodrigues\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/workspaces/Projeto-Vendinha-C-/VendinhaAPI/VendinhaAPI.csproj",
+      "projectUniqueName": "C:\\Users\\cesar.rodrigues\\OneDrive\\Pessoal\\Projeto-Vendinha-C-\\VendinhaAPI\\VendinhaAPI.csproj",
       "projectName": "VendinhaAPI",
-      "projectPath": "/workspaces/Projeto-Vendinha-C-/VendinhaAPI/VendinhaAPI.csproj",
-      "packagesPath": "/home/codespace/.nuget/packages/",
-      "outputPath": "/workspaces/Projeto-Vendinha-C-/VendinhaAPI/obj/",
+      "projectPath": "C:\\Users\\cesar.rodrigues\\OneDrive\\Pessoal\\Projeto-Vendinha-C-\\VendinhaAPI\\VendinhaAPI.csproj",
+      "packagesPath": "C:\\Users\\cesar.rodrigues\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\cesar.rodrigues\\OneDrive\\Pessoal\\Projeto-Vendinha-C-\\VendinhaAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/codespace/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\cesar.rodrigues\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
@@ -1997,6 +1997,7 @@
       },
       "frameworks": {
         "net10.0": {
+          "framework": "net10.0",
           "targetAlias": "net10.0",
           "projectReferences": {}
         }
@@ -2011,10 +2012,11 @@
         "auditLevel": "low",
         "auditMode": "all"
       },
-      "SdkAnalysisLevel": "10.0.200"
+      "SdkAnalysisLevel": "10.0.300"
     },
     "frameworks": {
       "net10.0": {
+        "framework": "net10.0",
         "targetAlias": "net10.0",
         "dependencies": {
           "Microsoft.AspNetCore.OpenApi": {
@@ -2059,7 +2061,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.200/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
