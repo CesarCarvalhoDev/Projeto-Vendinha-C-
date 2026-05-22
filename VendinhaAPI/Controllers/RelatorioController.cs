@@ -27,6 +27,9 @@ namespace VendinhaAPI.Controllers
             return Ok(contasAbertas);
         }
 
+        [HttpPost]
+        [Route("relatorios/contas")]
+
         [HttpGet]
         [Route("relatorios/inadimplentes")]
         public ActionResult<List<ClienteComDividaDto>> ListarInadimplentes()

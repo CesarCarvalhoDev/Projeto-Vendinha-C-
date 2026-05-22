@@ -79,6 +79,11 @@ namespace VendinhaAPI.Services
             return relatorio;
         }
 
+        public List<Divida> ListarDividasPagas(){
+            var dividas = _bancoDeDados.Where(dividas => dividas.Situacao == "Pago");
+            return dividas.ToList();
+        }
+
         public decimal CalcularSaldoDividas()
         {
             decimal total = 0;
@@ -118,5 +123,7 @@ namespace VendinhaAPI.Services
         {
             return _bancoDeDados.Where(divida => divida.ClienteId == clienteId).ToList();
         }
+
+
     }
 }

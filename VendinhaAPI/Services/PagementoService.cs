@@ -23,7 +23,7 @@ namespace VendinhaAPI.Services
             {
                 throw new Exception($"A divida com {id} já foi paga");
             }
-            divida.Situacao = "Paga";
+            divida.Situacao = "Pago";
             divida.DataPagamento = DateTime.Now;
             return divida;
         }
