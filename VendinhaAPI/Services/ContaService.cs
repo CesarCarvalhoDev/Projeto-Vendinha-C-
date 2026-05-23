@@ -83,8 +83,7 @@ namespace VendinhaAPI.Services
 
         public List<Divida> ListarDividasPagas()
         {
-            var dividas = _context.Dividas.Where(dividas => dividas.Situacao == "Pago");
-            return dividas.ToList();
+            return _context.Dividas.ToList();
         }
 
         public decimal CalcularSaldoDividas()
@@ -106,7 +105,7 @@ namespace VendinhaAPI.Services
         {
             decimal totalPago = 0;
 
-            List<Divida> pagamentos = _context.Dividas.Where(pagamentos => pagamentos.Situacao == "Pago").ToList();
+            var pagamentos = _context.Dividas.Where(pagamentos => pagamentos.Situacao == "Pago").ToList();
 
             foreach (var pagamento in pagamentos)
             {

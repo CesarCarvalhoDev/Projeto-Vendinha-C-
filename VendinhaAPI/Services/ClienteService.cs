@@ -17,7 +17,7 @@ namespace VendinhaAPI.Services
         }
         public Cliente Criar(CreateClienteDto dto)
         {
-            if (_context.Clientes.Any(p => p.CPF.Equals(dto.CPF, StringComparison.OrdinalIgnoreCase)))
+            if (_context.Clientes.Any(c => c.CPF.ToLower() == dto.CPF.ToLower()))
             {
                 throw new InvalidOperationException("Já existe um cliente cadastrado com esse CPF");
             }
