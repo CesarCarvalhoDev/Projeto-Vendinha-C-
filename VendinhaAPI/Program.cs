@@ -1,4 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using VendinhaAPI.Data;
 using VendinhaAPI.Services;
+using VendinhaAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +15,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ClienteService>();
 builder.Services.AddScoped<ContaService>();
 builder.Services.AddScoped<PagamentoService>();
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 

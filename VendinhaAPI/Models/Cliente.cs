@@ -12,7 +12,9 @@ public class Cliente
 
     public int Idade {get; set;}
 
-
+    public Cliente()
+    {
+    }
 
     public Cliente(CreateClienteDto dto)
     {
