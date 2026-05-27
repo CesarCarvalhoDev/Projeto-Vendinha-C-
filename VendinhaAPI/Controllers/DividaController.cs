@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using VendinhaAPI.DTOs;
@@ -28,15 +29,28 @@ namespace VendinhaAPI.Controllers
         public ActionResult<List<Divida>> ListarDividas()
         {
             var dividas = _contaService.ListarDividas();
-            return Ok(dividas);
+            if (dividas != null)
+            {
+                return Ok(dividas);
+            }
+            else
+            {
+                return BadRequest();
+            }
+            
         }
 
         [HttpGet("cliente/{clienteId}")]
         public ActionResult<List<Divida>> BuscarDividasPorCliente(int clienteId)
         {
             var dividas = _contaService.BuscarDividasPorCliente(clienteId);
-
-            return Ok(dividas);
+            if(dividas != null){
+                return Ok(dividas);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost]
@@ -45,12 +59,7 @@ namespace VendinhaAPI.Controllers
             try
             {
                 var divida = _contaService.AbrirDivida(dto);
-
-                return CreatedAtAction(
-                    nameof(BuscarDividasPorCliente),
-                    new { clienteId = divida.ClienteId },
-                    divida
-                );
+                return Created("", divida);
             }
             catch (Exception ex)
             {

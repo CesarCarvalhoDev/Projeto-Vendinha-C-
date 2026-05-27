@@ -21,6 +21,10 @@ namespace VendinhaAPI.Services
             {
                 throw new InvalidOperationException("Já existe um cliente cadastrado com esse CPF");
             }
+            if (_context.Clientes.Any(c => c.Email.ToLower() == dto.Email.ToLower()))
+            {
+                throw new InvalidOperationException("Esse email já está cadastrado na base de dados");
+            }
 
             Cliente cliente = new Cliente(dto)
             {
@@ -51,6 +55,13 @@ namespace VendinhaAPI.Services
         {
             List<Cliente> clientes = _context.Clientes.ToList();
             return clientes;
+        }
+
+        public bool AtualizarCliente(Cliente cliente)
+        {
+            _context.Clientes.Update(cliente);
+            _context.SaveChanges();
+            return true;
         }
 
         public void Deletar(int id)

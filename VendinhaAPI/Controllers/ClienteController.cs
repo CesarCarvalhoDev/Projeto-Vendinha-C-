@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using VendinhaAPI.DTOs;
 using VendinhaAPI.Models;
@@ -56,11 +57,40 @@ namespace VendinhaAPI.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Atualizar(int id, [FromBody] CreateClienteDto dto)
+        [HttpPut("{id}/atualizar")]
+        public IActionResult Atualizar(int id, [FromBody] UpdateClienteDto dto)
         {
-            return Ok("Endpoint de atualização ainda não implementado");
+            var cliente = _clienteService.BuscarPorId(id);
+
+            if(cliente == null)
+            {
+                return NotFound();
+            }
+
+            if (!string.IsNullOrEmpty(dto.NomeCompleto))
+            {
+                cliente.NomeCompleto = dto.NomeCompleto;
+            }
+            if (!string.IsNullOrEmpty(dto.Email))
+            {
+                cliente.Email = dto.Email;
+            }
+            if (!string.IsNullOrEmpty(dto.CPF))
+            {
+                cliente.CPF = dto.CPF;
+            }
+            if (_clienteService.AtualizarCliente(cliente))
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+            
         }
+
+        
 
         [HttpDelete("{id}")]
         public IActionResult Deletar(int id)

@@ -46,6 +46,7 @@ namespace VendinhaAPI.Services
 
         public List<Divida> ListarDividas()
         {
+            
             return _context.Dividas.ToList();
         }
 
