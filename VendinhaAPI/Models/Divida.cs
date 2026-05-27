@@ -8,7 +8,9 @@ public class Divida
     public DateTime DataCriacao {get; set;}
 
     public DateTime DataPagamento {get; set;}
-
+    public Divida()
+    {
+    }
     public Divida(int clienteId, decimal valor)
     {
         ClienteId = clienteId;

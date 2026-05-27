@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using VendinhaAPI.Data;
 using VendinhaAPI.DTOs;
 using VendinhaAPI.Models;
 
@@ -8,19 +9,21 @@ namespace VendinhaAPI.Services
 {
     public class ClienteService
     {
-        private static List<Cliente> _bancoDeDados = new List<Cliente>();
-        private static int _proximoId = 1;
+        private readonly AppDbContext _context;
 
+        public ClienteService(AppDbContext context)
+        {
+            _context = context;
+        }
         public Cliente Criar(CreateClienteDto dto)
         {
-            if (_bancoDeDados.Any(p => p.CPF.Equals(dto.CPF, StringComparison.OrdinalIgnoreCase)))
+            if (_context.Clientes.Any(c => c.CPF.ToLower() == dto.CPF.ToLower()))
             {
                 throw new InvalidOperationException("Já existe um cliente cadastrado com esse CPF");
             }
 
             Cliente cliente = new Cliente(dto)
             {
-                Id = _proximoId++,
                 NomeCompleto = dto.NomeCompleto,
                 CPF = dto.CPF,
                 DataNascimento = dto.DataNascimento,
@@ -28,13 +31,14 @@ namespace VendinhaAPI.Services
                 Idade = dto.Idade
             };
 
-            _bancoDeDados.Add(cliente);
+            _context.Clientes.Add(cliente);
+            _context.SaveChanges();
             return cliente;
 }
 
         public Cliente BuscarPorId(int id)
         {
-            var cliente = _bancoDeDados.FirstOrDefault(cliente => cliente.Id == id);
+            var cliente = _context.Clientes.FirstOrDefault(cliente => cliente.Id == id);
 
             if(cliente == null)
             {
@@ -45,14 +49,15 @@ namespace VendinhaAPI.Services
 
         public List<Cliente> ListarClientes()
         {
-            List<Cliente> clientes = _bancoDeDados.ToList();
+            List<Cliente> clientes = _context.Clientes.ToList();
             return clientes;
         }
 
         public void Deletar(int id)
         {
             var cliente = BuscarPorId(id);
-            _bancoDeDados.Remove(cliente);
+            _context.Clientes.Remove(cliente);
+            _context.SaveChanges();
         }
     }
 }
