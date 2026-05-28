@@ -18,10 +18,21 @@ namespace VendinhaAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Cliente>> ListarClientes()
+        public ActionResult<dynamic> ListarClientes([FromQuery] int page = 1, [FromQuery] int size = 10)
         {
+            if (page < 1) page = 1;
+            if (size < 1) size = 10;
+
             var clientes = _clienteService.ListarClientes();
-            return Ok(clientes);
+            if (clientes != null)
+            {
+                var clientesPaginados = clientes.Skip((page - 1) * size).Take(size).ToList();
+                return Ok(clientesPaginados);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet("{id}")]
@@ -62,7 +73,7 @@ namespace VendinhaAPI.Controllers
         {
             var cliente = _clienteService.BuscarPorId(id);
 
-            if(cliente == null)
+            if (cliente == null)
             {
                 return NotFound();
             }
@@ -87,10 +98,10 @@ namespace VendinhaAPI.Controllers
             {
                 return BadRequest();
             }
-            
+
         }
 
-        
+
 
         [HttpDelete("{id}")]
         public IActionResult Deletar(int id)

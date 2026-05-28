@@ -26,12 +26,16 @@ namespace VendinhaAPI.Controllers
 
 
         [HttpGet]
-        public ActionResult<List<Divida>> ListarDividas()
+        public ActionResult<dynamic> ListarDividas([FromQuery] int page = 1, [FromQuery] int size = 10)
         {
+            if (page < 1) page = 1;
+            if (size < 1) size = 10;
+
             var dividas = _contaService.ListarDividas();
             if (dividas != null)
             {
-                return Ok(dividas);
+                var dividasPaginadas = dividas.Skip((page - 1) *size).Take(size).ToList();                
+                return Ok(dividasPaginadas);
             }
             else
             {
